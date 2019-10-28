@@ -45,7 +45,7 @@ router.post('/',[
 });
 
 //end point PUT api/contacts/:id
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
 	const { name, email, phone, type } = req.body;
 
 	const contactFields = {};
