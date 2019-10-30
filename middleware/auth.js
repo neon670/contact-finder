@@ -9,7 +9,7 @@ const token = req.header('x-auth-token');
 	}
 
 	try{
-		const decoded = jwt.verify(token, config.get('jwtSecrect'));
+		const decoded = jwt.verify(token, config.get('jwtSecret'));
 		req.user = decoded.user;
 		next();
 	}catch(err){

@@ -9,7 +9,7 @@ const Contact = require('../models/Contact');
 //end point GET api/contacts
 router.get('/', auth, async (req, res) => {
 	try{
-		const contacts = await Contact.find({user: req.user.id}).sort({date: -1 });
+		const contacts = await Contact.find({ user: req.user.id }).sort({date: -1 });
 		res.json(contacts);
 	}catch(err){
 		console.error(500).send('error');
@@ -29,7 +29,7 @@ router.post('/',[
 		const { name, email, phone, type } = req.body;
 
 		try{
-			const newContact = newContact({
+			const newContact = new Contact({
 				name,
 				email,
 				phone,
@@ -37,7 +37,7 @@ router.post('/',[
 				user: req.user.id
 			});
 			const contact = await newContact.save();
-			return json(contact);
+			 res.json(contact);
 		}catch(err){
 			console.error(err.message);
 			res.status(500).send('error');
@@ -45,7 +45,7 @@ router.post('/',[
 });
 
 //end point PUT api/contacts/:id
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
 	const { name, email, phone, type } = req.body;
 
 	const contactFields = {};
@@ -58,7 +58,7 @@ router.put('/:id', async (req, res) => {
 		let contact = await Contact.findById(req.params.id);
 
 		if(!contact)
-			return res.status(404).json({msg: 'Contant not found'});
+			return res.status(404).json({msg: 'Contact not found'});
 		if(contact.user.toString() !== req.user.id){
 			return res.status(401).json({msg: ' Not Authorized'})
 		}

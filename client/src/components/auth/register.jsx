@@ -29,7 +29,7 @@ const Register = (props) =>{
 	});
 	const { name, email, password, password_confirm} = user;
 
-	const onChange = e => setUser({...user, [e.target.name]: e.target.value});
+	const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 	const onSubmit = e => {
 		e.preventDefault();
 		if( name === '' || email === '' || password === ''){

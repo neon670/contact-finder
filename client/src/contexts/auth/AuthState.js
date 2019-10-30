@@ -11,7 +11,8 @@ AUTH_ERROR,
 LOGIN_SUCCESS,
 LOGIN_FAIL,
 LOGOUT,
-CLEAR_ERRORS}  from '../type';
+CLEAR_ERRORS
+}  from '../type';
 
 const AuthState = props => {
 	const intialState ={
@@ -38,14 +39,14 @@ const AuthState = props => {
 	};
 
 	//register
-	const register = async FormData => {
+	const register = async formData => {
 		const config = {
 			headers: {
 				'Content-Type' : 'application/json'
 			}
-		}
+		};
 		try{
-			const res = await axios.post('/api/users', FormData, config);
+			const res = await axios.post('/api/users', formData, config);
 			dispatch({
 				type: REGISTER_SUCCESS,
 				payload: res.data
@@ -60,14 +61,14 @@ const AuthState = props => {
 	}
 
 	//login
-		const login = async FormData => {
+		const login = async formData => {
 		const config = {
 			headers: {
 				'Content-Type' : 'application/json'
 			}
 		}
 		try{
-			const res = await axios.post('/api/auth', FormData, config);
+			const res = await axios.post('/api/auth', formData, config);
 			dispatch({
 				type: LOGIN_SUCCESS,
 				payload: res.data
@@ -77,16 +78,16 @@ const AuthState = props => {
 			dispatch({
 				type: LOGIN_FAIL,
 				payload: err.response.data.msg 
-			})
+			});
 		}
-	}
+	};
 
 	//logout
 	const logout = () => dispatch({type: LOGOUT});
 
 	
 	//clear
-	
+	const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
 	return (
 		<AuthContext.Provider 
@@ -99,7 +100,8 @@ const AuthState = props => {
 			register,
 			loadUser,
 			login,
-			logout
+			logout,
+			clearErrors
 		}}>
 			{props.children}
 		</AuthContext.Provider>

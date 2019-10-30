@@ -1,16 +1,18 @@
 const express = require('express');
 const connectDB = require('./config/db');
+const path = require('path');
 
 //connect db
 connectDB();
 
-//middleware
-// app.use(express.json({extended: false}));
-
 const app = express();
 
-app.get('/', (req, res) => res.json ({msg: 'welcome to the contact api'})
-	);
+//middleware
+app.use(express.json({ extended: false }));
+
+
+
+
 
 //routes
 app.use('/api/users', require('./routes/users'));
@@ -22,3 +24,12 @@ app.listen(port, error => {
 	if(error) throw error;
 	console.log('server running on port ' + port);
 });
+
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  );
+}
