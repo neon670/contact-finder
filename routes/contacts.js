@@ -13,6 +13,7 @@ router.get('/', auth, async (req, res) => {
 		res.json(contacts);
 	}catch(err){
 		console.error(500).send('error');
+		res.status(500).send('Error');
 	}
 });
 
